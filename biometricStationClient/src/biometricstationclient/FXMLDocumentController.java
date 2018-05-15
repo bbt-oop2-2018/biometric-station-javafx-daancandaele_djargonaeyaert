@@ -15,71 +15,89 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.layout.VBox;
+import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 public class FXMLDocumentController implements Initializable, IMqttMessageHandler {
+     double same = 100;
+     final NumberAxis xAxis = new NumberAxis(5,20,1);
+   @FXML private LineChart heartBeatChart;
+   private XYChart.Series heartBeatValues;
     
-    @FXML private Button send;
-    @FXML private TextArea message;
-    @FXML private TextArea Data;
+   @FXML
+    private void generateRandomDataHandler(ActionEvent event) {
+        System.out.println("You clicked me!");
+        heartBeatValues.getData().remove(0, heartBeatValues.getData().size() - 5);
+        
+        
+        
+        xAxis.setLowerBound(xValue-5);
+        xAxis.setUpperBound(xValue-1);
+    }
     
     // Allows us to use the wrapper for sending chat messages via MQTT
     private MqttChatService chatService;
     int maxLine = 1;
-    
-    @FXML
-    private void handleSend(ActionEvent event) {
-        // Use the sendMessage() method to send a message to an mqtt channel
-       
-        chatService.sendMessage(message.getText());
-        
-    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Create a chat service and allow this class to receive messages
         chatService = new MqttChatService();
         chatService.setMessageHandler(this);
+        heartBeatValues = new XYChart.Series();
+        heartBeatValues.setName("Temperature (in Celcius)");
+        heartBeatChart.getData().add(heartBeatValues);
         
-        // When the user closes the window we need to disconnect the client
         
+        // When the user closes the window we need to disconnect the cl
         //disconnectClientOnClose();
-    }    
-
+    }
+    
+    private int xValue = 1;
     // This method is called if a chat message is received from mqtt
     @Override
     public void messageArrived(String channel, String message) {
        
-        if (maxLine < 10){
-            Data.setText(message +'\n'+ Data.getText());
-            maxLine++;
+        
             
-        } else {
-            Data.setText(message);
-            maxLine =1;
-        }
+            //int beat = Integer.parseInt(message);
+            double beat = Double.parseDouble(message);
+            
+            
+            
+            if (beat == same) {
+            
+            
+            }else{
+            
+            heartBeatValues.getData().add(new XYChart.Data(xValue++, beat));
+            same = beat;
+            }
+            
+            
+            
+            
+            
+            
+            
+        
      
       
  
         
-        System.out.println("Received chat message (on channel = " + channel
-                + "): " + message);
+        System.out.println(message);
     }
-    /*
-    private void disconnectClientOnClose() {
-        // Source: https://stackoverflow.com/a/30910015
-        send.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if (oldScene == null && newScene != null) {
-                // scene is set for the first time. Now its the time to listen stage changes.
-                newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
-                    if (oldWindow == null && newWindow != null) {
-                        // stage is set. now is the right time to do whatever we need to the stage in the controller.
-                        ((Stage) newWindow).setOnCloseRequest((event) -> {
-                            chatService.disconnect();
-                        });
-                    }
-                });
-            }
-        });
-    }
-*/
+    
+    
+  
+    
+    
 }
