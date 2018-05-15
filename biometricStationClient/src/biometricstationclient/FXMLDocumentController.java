@@ -27,77 +27,82 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 public class FXMLDocumentController implements Initializable, IMqttMessageHandler {
-     double same = 100;
-     final NumberAxis xAxis = new NumberAxis(5,20,1);
-   @FXML private LineChart heartBeatChart;
-   private XYChart.Series heartBeatValues;
+
+    double same = 100;
+    final NumberAxis xAxis = new NumberAxis(5, 20, 1);
+
+    private double beat = 0;
+    private double temp = 0;
+    private double accel = 0;
+    private double previousBeat = 0;
+    private double previousTemp = 0;
+    private double previousAccel = 0;
     
-   @FXML
+    private String tempTopic = "temp";
+    private String heartTopic = "heart";
+    private String accelTopic = "accel";
+    @FXML
+    private LineChart heartBeatChart;
+    private XYChart.Series heartBeatValues;
+
+    @FXML
     private void generateRandomDataHandler(ActionEvent event) {
         System.out.println("You clicked me!");
         heartBeatValues.getData().remove(0, heartBeatValues.getData().size() - 5);
-        
-        
-        
-        xAxis.setLowerBound(xValue-5);
-        xAxis.setUpperBound(xValue-1);
+        xAxis.setLowerBound(5);
+
+        //xAxis.setLowerBound(xValue-5);
+        //   xAxis.setUpperBound(xValue-1);
     }
-    
+
     // Allows us to use the wrapper for sending chat messages via MQTT
     private MqttChatService chatService;
     int maxLine = 1;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Create a chat service and allow this class to receive messages
-        chatService = new MqttChatService();
+        chatService = new MqttChatService("dashboard", tempTopic);
         chatService.setMessageHandler(this);
         heartBeatValues = new XYChart.Series();
         heartBeatValues.setName("Temperature (in Celcius)");
         heartBeatChart.getData().add(heartBeatValues);
-        
-        
+
         // When the user closes the window we need to disconnect the cl
         //disconnectClientOnClose();
     }
-    
+
     private int xValue = 1;
+
     // This method is called if a chat message is received from mqtt
     @Override
     public void messageArrived(String channel, String message) {
-       
-        
-            
+            chatService.switchChannel(heartTopic);
+        if (channel.equals(heartTopic) && (beat != previousBeat)) {
             //int beat = Integer.parseInt(message);
-            double beat = Double.parseDouble(message);
-            
-            
-            
-            if (beat == same) {
-            
-            
-            }else{
-            
+            System.out.println("beat");
+
+
+            previousBeat = beat;
+            beat = Double.parseDouble(message);
             heartBeatValues.getData().add(new XYChart.Data(xValue++, beat));
-            same = beat;
+        }
+        chatService.switchChannel(tempTopic);
+            if(channel.equals(tempTopic) ){
+                previousTemp = temp;
+                temp = Double.parseDouble(message);
+                heartBeatValues.getData().add(new XYChart.Data(xValue++, temp));
+            }  
+            
+            chatService.switchChannel(accelTopic);
+            if(channel.equals(tempTopic)&& (accel != previousAccel)){
+                previousAccel = accel;
+                accel = Double.parseDouble(message);
+                heartBeatValues.getData().add(new XYChart.Data(xValue++, accel));
             }
             
-            
-            
-            
-            
-            
-            
-        
-     
-      
- 
-        
+        System.out.println(channel);
         System.out.println(message);
     }
-    
-    
-  
-    
-    
+
 }
