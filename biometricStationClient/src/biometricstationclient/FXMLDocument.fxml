@@ -3,11 +3,12 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biometricstationclient.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biometricstationclient.FXMLDocumentController">
    <children>
-      <LineChart fx:id="heartBeatChart" layoutX="107.0" title="heartBeat">
+      <LineChart fx:id="heartBeatChart" layoutX="208.0" layoutY="14.0" prefHeight="300.0" prefWidth="1080.0" snapToPixel="false" title="HeartBeat">
         <xAxis>
           <NumberAxis side="BOTTOM" fx:id="x" />
         </xAxis>
@@ -15,6 +16,15 @@
           <NumberAxis fx:id="y" side="LEFT" />
         </yAxis>
       </LineChart>
-      <Button fx:id="generateRandomData" layoutX="149.0" layoutY="435.0" mnemonicParsing="false" onAction="#generateRandomDataHandler" text="Button" />
+      <Button fx:id="generateRandomData" layoutX="109.0" layoutY="335.0" mnemonicParsing="false" onAction="#generateRandomDataHandler" text="Button" />
+      <LineChart fx:id="tempChart" layoutX="208.0" layoutY="314.0" prefHeight="300.0" prefWidth="1080.0" title="Temperature">
+        <xAxis>
+          <NumberAxis prefWidth="756.0" side="BOTTOM" fx:id="xt" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yt" prefHeight="225.0" prefWidth="30.0" side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <TextArea fx:id="displayData" layoutX="9.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

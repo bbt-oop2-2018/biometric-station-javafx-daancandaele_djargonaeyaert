@@ -6,6 +6,8 @@
             <file>file:/C:/Users/Gebruiker/Documents/projectwerk/javafx/biometric-station-javafx-daancandaele_djargonaeyaert/biometricStationClient/src/biometricstationclient/BiometricStationClient.java</file>
             <file>file:/C:/Users/Gebruiker/Documents/projectwerk/javafx/biometric-station-javafx-daancandaele_djargonaeyaert/biometricStationClient/src/biometricstationclient/FXMLDocumentController.java</file>
             <file>file:/C:/Users/Gebruiker/Documents/projectwerk/javafx/biometric-station-javafx-daancandaele_djargonaeyaert/biometricStationClient/src/biometricstationclient/FXMLDocument.fxml</file>
+            <file>file:/C:/Users/Gebruiker/Documents/projectwerk/javafx/biometric-station-javafx-daancandaele_djargonaeyaert/biometricStationClient/src/be/vives/oop/mqtt/chatservice/MqttChatService.java</file>
+            <file>file:/C:/Users/Gebruiker/Documents/projectwerk/javafx/biometric-station-javafx-daancandaele_djargonaeyaert/biometricStationClient/src/be/vives/oop/mqtt/chatservice/IMqttMessageHandler.java</file>
         </group>
     </open-files>
 </project-private>

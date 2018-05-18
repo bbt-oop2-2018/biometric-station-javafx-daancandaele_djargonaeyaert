@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="biometricStationClient.jnlp">
+  <information>
+    <title>biometricStationClient</title>
+    <vendor>Gebruiker</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="biometricStationClient.jar" size="8667" download="eager" />
+    <jar href="lib\org.eclipse.paho.client.mqttv3-1.2.0.jar" size="202925" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="biometricStationClient" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="biometricstationclient.BiometricStationClient"  name="biometricStationClient" />
+  <update check="always"/>
+</jnlp>
